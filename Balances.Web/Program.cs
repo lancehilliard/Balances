@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Buckets.Web
+namespace Balances.Web
 {
     public class Program
     {

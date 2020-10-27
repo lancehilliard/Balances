@@ -1,12 +1,12 @@
 using System;
-using Buckets.Web.Classes;
+using Balances.Web.Classes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Buckets.Web
+namespace Balances.Web
 {
     public class Startup
     {

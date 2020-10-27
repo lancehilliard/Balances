@@ -32,8 +32,8 @@ jobs:
     - name: Add Version Comment
       uses: DamianReeves/write-file-action/@v1.0
       with:
-        path: Buckets.Web.csproj/Pages/Index.razor
-        contents: <!-- built from https://github.com/lancehilliard/Buckets/tree/${{ github.event.inputs.Commit }} -->
+        path: Balances.Web.csproj/Pages/Index.razor
+        contents: <!-- built from https://github.com/lancehilliard/Balances/tree/${{ github.event.inputs.Commit }} -->
         write-mode: append
 
     - name: Set up .NET Core
@@ -42,10 +42,10 @@ jobs:
         dotnet-version: '3.1.102'
 
     - name: Build with dotnet
-      run: dotnet build --configuration Release Buckets.Web
+      run: dotnet build --configuration Release Balances.Web
 
     - name: dotnet publish
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp Buckets.Web
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp Balances.Web
 
     - name: Deploy
       uses: azure/webapps-deploy@v2

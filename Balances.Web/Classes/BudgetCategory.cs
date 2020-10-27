@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Buckets.Web.Classes
+namespace Balances.Web.Classes
 {
     public class BudgetCategory {
         public string Name { get; set; }

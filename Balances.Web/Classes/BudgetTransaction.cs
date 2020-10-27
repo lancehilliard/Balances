@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Buckets.Web.Classes
+namespace Balances.Web.Classes
 {
     public class BudgetTransaction
     {
