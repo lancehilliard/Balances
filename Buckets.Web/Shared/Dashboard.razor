@@ -1,0 +1,114 @@
+﻿@using Buckets.Web.Classes
+@using Microsoft.Extensions.Hosting
+@inject IBudgetCategoryGetter BudgetCategoryGetter
+@if (Categories == null)
+{
+    <div>Loading...</div>
+}
+else
+{
+    @foreach (var category in Categories)
+    {
+        <div class="rounded category-container">
+            <div class="row rounded category-header">
+                <div class="col-md-12"><h1>@category.Name: @($"{category.Balance:C}")</h1></div>
+            </div>
+            @foreach (var transaction in category.Transactions.OrderByDescending(x => x.When))
+            {
+                <div class="row rounded category-transaction">
+                    <div class="col-md-2">
+                        @transaction.When.ToShortDateString()
+                    </div>
+                    <div class="col-md-3">
+                        @transaction.PayeeName
+                    </div>
+                    <div class="col-md-5">
+                        @transaction.Memo
+                    </div>
+                    <div class="col-md-2">
+                        @($"{transaction.Amount:C}")
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
+
+@code
+{
+    protected override async Task OnInitializedAsync() {
+        Categories = new List<BudgetCategory>();
+        if (string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"), Environments.Development))
+        {
+            Categories.Add(new BudgetCategory
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Evan Allowance",
+                Balance = 5,
+                Transactions = new List<BudgetTransaction>
+        {
+                        new BudgetTransaction
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            When = DateTime.Now.AddDays(-10),
+                            PayeeName = "Payer Name",
+                            Memo = "Memo Value",
+                            Amount = 12
+                        },
+                        new BudgetTransaction
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            When = DateTime.Now.AddDays(-10),
+                            PayeeName = "Payer Name",
+                            Memo = "Memo Value",
+                            Amount = 12
+                        },
+                        new BudgetTransaction
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            When = DateTime.Now.AddDays(-10),
+                            PayeeName = "Payer Name",
+                            Memo = "Memo Value",
+                            Amount = 12
+                        },
+                        new BudgetTransaction
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            When = DateTime.Now.AddDays(-10),
+                            PayeeName = "Payer Name",
+                            Memo = "Memo Value",
+                            Amount = 12
+                        },
+                        new BudgetTransaction
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            When = DateTime.Now.AddDays(-10),
+                            PayeeName = "Payer Name",
+                            Memo = "Memo Value",
+                            Amount = 12
+                        },
+                        new BudgetTransaction
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            When = DateTime.Now.AddDays(-10),
+                            PayeeName = "Payer Name",
+                            Memo = "Memo Value",
+                            Amount = 12
+                        }
+                    }
+            });
+        }
+        else
+        {
+            foreach (var categoryId in CategoryIds)
+            {
+                Categories.Add(await BudgetCategoryGetter.Get(categoryId));
+            }
+        }
+    }
+
+    [Parameter]
+    public IEnumerable<string> CategoryIds { get; set; }
+    private List<BudgetCategory> Categories { get; set; }
+}
+

@@ -1,0 +1,17 @@
+﻿@page "/Quinn"
+
+<Dashboard CategoryIds="@CategoryIds"></Dashboard>
+
+@code
+{
+    protected override Task OnInitializedAsync()
+    {
+        CategoryIds = new List<string> {
+            "c5724f50-ec5d-4ab0-882b-8741e56584a2", // Allowance
+            "1675b4cb-0ab5-4e29-a837-72737a366a1e" // Salary
+        };
+        return base.OnInitializedAsync();
+    }
+
+    private List<string> CategoryIds { get; set; }
+}

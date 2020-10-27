@@ -1,0 +1,17 @@
+﻿@page "/Evan"
+
+<Dashboard CategoryIds="@CategoryIds"></Dashboard>
+
+@code
+{
+    protected override Task OnInitializedAsync()
+    {
+        CategoryIds = new List<string> {
+            "b744e447-b702-4e6e-8456-40be9ba5af54", // Allowance
+            "455f36bf-2806-4de1-9d54-d1028ca99b64" // Salary
+        };
+        return base.OnInitializedAsync();
+    }
+
+    private List<string> CategoryIds { get; set; }
+}
