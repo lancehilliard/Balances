@@ -1,0 +1,56 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Deploy to Azure
+
+on:
+  workflow_dispatch:
+    inputs:
+      Commit:
+        description: 'e.g. bf819e2...yadayada...f35ede9'
+        required: true
+
+jobs:
+  validate-inputs:
+    runs-on: windows-latest
+    steps:
+      - run: "echo Commit: ${{ github.event.inputs.Commit }}"
+
+  deploy:
+    needs: [validate-inputs]
+    runs-on: windows-latest
+
+    steps:
+    - name: Get Source
+      uses: actions/checkout@master
+      with:
+        ref: ${{ github.event.inputs.Commit }}
+        
+    - name: Log Message of Build Commit
+      run: "git log -1 ${{ github.event.inputs.Commit }} --pretty=format:%s"
+    
+    - name: Add Version Comment
+      uses: DamianReeves/write-file-action/@v1.0
+      with:
+        path: Buckets.Web.csproj/Pages/Index.razor
+        contents: <!-- built from https://github.com/lancehilliard/Buckets/tree/${{ github.event.inputs.Commit }} -->
+        write-mode: append
+
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.102'
+
+    - name: Build with dotnet
+      run: dotnet build --configuration Release Buckets.Web.csproj
+
+    - name: dotnet publish
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp Buckets.Web
+
+    - name: Deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'balances'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_d5c9962427054c2482fefb4c5a5e68e5 }}
+        package: ${{env.DOTNET_ROOT}}/myapp
