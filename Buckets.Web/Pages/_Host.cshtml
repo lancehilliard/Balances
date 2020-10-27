@@ -14,11 +14,20 @@
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var date = new Date('@DateTime.UtcNow.ToString("R")');
+            var when = date.toLocaleString([], { 'weekday': 'short', 'month': 'numeric', 'day': 'numeric', 'hour': 'numeric', 'minute': 'numeric', 'timeZoneName': 'short' });
+            var whenDiv = document.createElement("div");
+            whenDiv.className = "rounded when";
+            whenDiv.innerHTML = when;
+            document.body.prepend(whenDiv);
+        });
+    </script>
 </head>
 <body>
-    <div class="rounded when">@DateTime.Now.ToString("ddd, MMM dd @ h:mmtt \"GMT\"zzz")</div>
     <app>
-        <component type="typeof(App)" render-mode="ServerPrerendered" />
+        <component type="typeof(App)" render-mode="ServerPrerendered"/>
     </app>
     <div id="blazor-error-ui">
         <environment include="Staging,Production">
