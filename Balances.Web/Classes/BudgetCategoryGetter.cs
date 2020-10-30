@@ -35,7 +35,7 @@ namespace Balances.Web.Classes
             var balanceMilliUnits = category.Value<decimal>("balance");
             var balance = Math.Round(balanceMilliUnits / 1000, 2);
 
-            content = await HttpClient.GetStringAsync($"https://api.youneedabudget.com/v1/budgets/{_budgetId}/categories/{categoryId}/transactions?since_date={DateTime.Now.AddDays(-30):yyyy-MM-dd}");
+            content = await HttpClient.GetStringAsync($"https://api.youneedabudget.com/v1/budgets/{_budgetId}/categories/{categoryId}/transactions?since_date={DateTime.Now.AddDays(-93):yyyy-MM-dd}");
             jObject = JObject.Parse(content);
             data = jObject["data"];
             var transactionsData = (JArray)data["transactions"];

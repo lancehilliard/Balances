@@ -187,6 +187,10 @@ app {
     }
 }
 
+div#dashboard {
+    margin-bottom: 15px;
+}
+
 div.category-container {
     margin-top: 25px;
     padding: 10px;
