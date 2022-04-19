@@ -105,9 +105,15 @@
         }
         else
         {
-            foreach (var categoryId in CategoryIds)
-            {
-                Categories.Add(await BudgetCategoryGetter.Get(categoryId));
+            foreach (var categoryId in CategoryIds) {
+                BudgetCategory category;
+                try {
+                    category = await BudgetCategoryGetter.Get(categoryId);
+
+                } catch (Exception) {
+                    category = new BudgetCategory { Name = $"Missing Category {categoryId.Substring(categoryId.Length - 6)}", Balance = 0, Transactions = new List<BudgetTransaction>() };
+                }
+                Categories.Add(category);
             }
         }
     }
